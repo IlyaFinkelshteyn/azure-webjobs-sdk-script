@@ -86,12 +86,12 @@ namespace Microsoft.Azure.WebJobs.Script.Tests.ApplicationInsights
             telemetryItem = telemetryQueue.Dequeue();
             ValidateTrace(telemetryItem, "Job host started", LogCategories.Startup);
 
+            telemetryItem = telemetryQueue.Dequeue();
+            ValidateTrace(telemetryItem, "Function started (Id=", LogCategories.Executor);
+
             // Even though the RequestTelemetry comes last, the timestamp is at the beginning of the invocation
             telemetryItem = telemetryQueue.Dequeue();
             ValidateRequest(telemetryItem);
-
-            telemetryItem = telemetryQueue.Dequeue();
-            ValidateTrace(telemetryItem, "Function started (Id=", LogCategories.Executor);
 
             telemetryItem = telemetryQueue.Dequeue();
             ValidateTrace(telemetryItem, "Function completed (Success, Id=", LogCategories.Executor);
